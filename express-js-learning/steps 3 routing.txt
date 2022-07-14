@@ -1,0 +1,34 @@
+......>
+app.METHOD(PATH, HANDLER)
+Where:
+
+app is an instance of express.
+METHOD is an HTTP request method (GET, POST, and so on), in lowercase.
+PATH is a path on the server.
+HANDLER is the function executed when the route is matched.
+.........>
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+})
+.......>
+app.post('/', function (req, res) {
+  res.send('Got a POST request')
+})
+.......>
+app.put('/user', function (req, res) {
+  res.send('Got a PUT request at /user')
+})
+.....>
+app.delete('/user', function (req, res) {
+  res.send('Got a DELETE request at /user')
+})
+........>
+app.all('/secret', function (req, res, next) {
+    res.send('Accessing the secret section ...')
+    next() // pass control to the next handler
+  })
+.......>
+app.get() to handle GET requests 
+and app.post to handle POST requests
+app.all() to handle all HTTP methods 
+and app.use() to specify middleware as the callback function

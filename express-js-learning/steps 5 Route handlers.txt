@@ -1,0 +1,43 @@
+You can provide multiple callback functions that behave like middleware to handle a request. 
+The only exception is that these callbacks might invoke next('route') to bypass the remaining route callbacks
+........
+A single callback function can handle a route. For example:
+
+app.get('/example/a', function (req, res) {
+  res.send('Hello from A!')
+})
+
+
+...............
+More than one callback function can handle a route 
+
+app.get('/example/b', function (req, res, next) {
+  console.log('the response will be sent by the next function ...')
+  next()
+}, function (req, res) {
+  res.send('Hello from B!')
+})
+.......................>
+// route handlers
+  app.get('/multiple', function (req, res, next) {
+    console.log('the response will be sent by the next function ...')
+    next()
+  }, function (req, res) {
+    res.send('Hello from B!')
+  })
+  var cb0 = function (req, res, next) {
+    console.log('CB0')
+    next()
+  }
+  
+  var cb1 = function (req, res, next) {
+   // res.send('Hello from C1!')
+   console.log('CB1')
+    next()
+  }
+  
+  var cb2 = function (req, res) {
+    res.send('Hello from C!')
+  }
+  
+  app.get('/multiple/c', [cb0, cb1, cb2])
